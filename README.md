@@ -47,9 +47,19 @@ Update the files with your information.
 
 ### Run the code
 
-Run the command
+This command must work
 ```commandline
-ncat --sh-exec "/usr/bin/env bash geo_online_tracking_to_messenger.sh" --keep-open -l localhost YOUR_PORT
+ncat --sh-exec "/usr/bin/env bash geo_online_tracking_to_messenger.sh" --keep-open -l localhost PORT_TO_LISTEN
+```
+
+BUT in one environment `ncat` with `--sh-exec` does not allow to read
+into the communication between the client and `ncat`
+because `ncat` catches all the output to send to the client.
+Plus, `ncat` with `--sh-exec` polls all the ports and floods verbose output
+(without `--sh-exec` everything is fine).
+So as an alternative, the following command can be used
+```commandline
+PORT_TO_LISTEN=YOUR_PORT /usr/bin/env bash run_with_loop.sh
 ```
 
 Start geolocation online tracking

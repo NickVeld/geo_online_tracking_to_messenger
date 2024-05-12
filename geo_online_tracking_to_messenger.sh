@@ -1,5 +1,13 @@
 #!/usr/bin/env sh
 
+#   Copyright 2024 Ni.Ve.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+
 set -e
 
 echo "WARNING: Before deleting last_message_id, delete the message or you won't be able to clean it after"

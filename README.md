@@ -66,5 +66,5 @@ Warning: leave --sh-exec ...sh in the start because
 the mocked ncat does not parse args, just takes the 2nd arg.
 
 ```
-PATH=.:${PATH} ncat --sh-exec geo_online_tracking_to_messenger.sh -l localhost:YOUR_PORT
+PATH=.:${PATH} ncat --sh-exec geo_online_tracking_to_messenger.sh -l localhost YOUR_PORT
 ```

@@ -27,8 +27,6 @@ echo "${url_relative_reference}" \
 )
 # https://www.openstreetmap.org/?mlat=\1\&mlon=\2\&zoom\=16
 
-#echo "${message_to_send}"
-
 # Transforms date in human readable format and then (together with map URL into URL-encoded string)
 message_to_send=$(eval "${message_to_send}" | sed 's| |+|g' | sed 's|:|%3A|g' )
 
@@ -57,7 +55,7 @@ EOF
 set -e
 
 external_response=$(
-echo "${external_request}" | ncat "${external_host}" 443
+echo "${external_request}" | ncat --no-shutdown --ssl "${external_host}" 443
 )
 
 if [ ! -f last_message_id.tmp ]; then

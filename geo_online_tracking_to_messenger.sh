@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 #   Copyright 2024 Ni.Ve.
 #
@@ -14,11 +14,12 @@ echo "WARNING: Before deleting last_message_id, delete the message or you won't 
 
 
 # Does not work: IFS=$'\n' / IFS='*manual_new_linw*'/ IFS=$(echo -e '\n') read -rd ''
-read -r http_method url_relative_reference http_ptotocol rest_lines
-user_agent_line=$(
-echo "${rest_lines}" \
-| sed -r 's|.*(User-Agent: [^:]*) [A-Z][A-Z a-z -]*:.*|\1|'
-)
+read -r http_method url_relative_reference http_protocol
+# OSM And sends User-Agent before Host in contrary to the browsers
+# TODO: use something like the following command to find the right line:
+# sed -r 's|.*(User-Agent: [^:]*) [A-Z][A-Z a-z -]*:.*|\1|'
+read -r user_agent_line
+read -r host_line
 
 message_to_send=$(
 echo "${url_relative_reference}" \

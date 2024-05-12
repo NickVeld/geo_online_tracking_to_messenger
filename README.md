@@ -49,7 +49,7 @@ Update the files with your information.
 
 Run the command
 ```commandline
-ncat --sh-exec geo_online_tracking_to_messenger.sh -l localhost:YOUR_PORT
+ncat --sh-exec "/usr/bin/env bash geo_online_tracking_to_messenger.sh" --keep-open -l localhost YOUR_PORT
 ```
 
 Start geolocation online tracking

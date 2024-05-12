@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 #   Copyright 2024 Ni.Ve.
 #
@@ -34,4 +34,4 @@ Connection: Keep-Alive
 Accept-Encoding: gzip
 EOF
 
-echo ${incoming_request_text} | /bin/sh -c "${2}"
+echo ${incoming_request_text} | /usr/bin/env bash -c "${2}"

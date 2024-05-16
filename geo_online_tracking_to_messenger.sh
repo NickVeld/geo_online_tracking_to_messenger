@@ -15,15 +15,10 @@ echo "WARNING: Before deleting last_message_id, delete the message or you won't 
 
 # Does not work: IFS=$'\n' / IFS='*manual_new_linw*'/ IFS=$(echo -e '\n') read -rd ''
 read -r http_method url_relative_reference http_protocol
-# OSM And sends User-Agent before Host in contrary to the browsers
-# TODO: use something like the following command to find the right line:
-# sed -r 's|.*(User-Agent: [^:]*) [A-Z][A-Z a-z -]*:.*|\1|'
-read -r user_agent_line
-read -r host_line
 
 message_to_send=$(
-echo "${url_relative_reference}" \
-| sed -r 's|.*lat=([0-9]*\.[0-9]*)&lon=([0-9]*\.[0-9]*)&timestamp=([0-9]*).*|echo $(date) https%3A%2F%2Fwww.openstreetmap.org%2F%3Fmlat%3D\1%26mlon%3D\2%26zoom%3D16|'
+  echo "${url_relative_reference}" \
+  | sed -r 's|.*lat=([0-9]*\.[0-9]*)&lon=([0-9]*\.[0-9]*)&timestamp=([0-9]*).*|echo $(date) https%3A%2F%2Fwww.openstreetmap.org%2F%3Fmlat%3D\1%26mlon%3D\2%26zoom%3D16|'
 )
 # https://www.openstreetmap.org/?mlat=\1\&mlon=\2\&zoom\=16
 
@@ -42,20 +37,8 @@ else
   external_url_relative_reference="/bot${external_token}/sendMessage?text=${message_to_send}&chat_id=${external_recipient}"
 fi
 
-set +e
-
-read -d '' external_request <<- EOF
-GET ${external_url_relative_reference} HTTP/1.1
-Host: ${external_host}
-${user_agent_line}
-Connection: Keep-Alive
-Accept: */*
-EOF
-
-set -e
-
 external_response=$(
-echo "${external_request}" | ncat --no-shutdown --ssl "${external_host}" 443
+  curl -L "https://${external_host}${external_url_relative_reference}"
 )
 
 if [ ! -f last_message_id.tmp ]; then

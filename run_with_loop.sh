@@ -8,6 +8,11 @@
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 
+SECONDS_TO_SLEEP=60
 while : ; do
-  ncat -l localhost ${PORT_TO_LISTEN} | /usr/bin/env bash geo_online_tracking_to_messenger.sh
+  ncat -l localhost "${PORT_TO_LISTEN}" | /usr/bin/env bash geo_online_tracking_to_messenger.sh
+  SECONDS_START="${SECONDS}"
+  while [ "$((${SECONDS} - ${SECONDS_START}))" -lt "${SECONDS_TO_SLEEP}" ] ; do
+    ncat -l localhost "${PORT_TO_LISTEN}" > /dev/null
+  done
 done

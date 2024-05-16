@@ -23,7 +23,7 @@ read -r host_line
 
 message_to_send=$(
 echo "${url_relative_reference}" \
-| sed -r 's|.*lat=([0-9]*\.[0-9]*)&lon=([0-9]*\.[0-9]*)&timestamp=([0-9]*).*|echo $(date -d @\3) https%3A%2F%2Fwww.openstreetmap.org%2F%3Fmlat%3D\1%26mlon%3D\2%26zoom%3D16|'
+| sed -r 's|.*lat=([0-9]*\.[0-9]*)&lon=([0-9]*\.[0-9]*)&timestamp=([0-9]*).*|echo $(date) https%3A%2F%2Fwww.openstreetmap.org%2F%3Fmlat%3D\1%26mlon%3D\2%26zoom%3D16|'
 )
 # https://www.openstreetmap.org/?mlat=\1\&mlon=\2\&zoom\=16
 

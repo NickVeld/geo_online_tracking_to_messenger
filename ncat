@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+#   Copyright 2024 Ni.Ve.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+
+if [[ "$*" != *"-l"* ]]; then
+    >&2 echo "[Mocked ncat request]"
+    >&2 echo "Command line args: $*"
+    >&2 echo "Input:"
+    read -d '' incoming_request_text
+    >&2 echo "${incoming_request_text}"
+    #>&2 echo
+    #>&2 echo External service connection:
+    #>&2 echo
+    # There could be an error connected with SSL
+    #>&2 echo "${incoming_request_text}" | openssl 2>&1 s_client -quiet -connect ${1}:${2}
+    # Despite answers on StackOverflow curl does not want to read raw HTTP file
+    #>&2 echo "${incoming_request_text}" | curl -vL "https://${1}:${2}" | head -n 50
+    echo "Raw HTTP response placeholder"
+    echo '{"ok":true,"result":{"message_id":3,"from":{"id":1234567890,"is_bot":true,"first_name":"BOT","username":"bot_bot"},"chat":{"id":123456789,"first_name":"Name","last_name":"Last","username":"Some","type":"private"},"date":1715446393,"text":"Sun Aug 22 20:20:58 WEDT 56326 https://www.openstreetmap.org/?mlat=10.208847&mlon=2.8889685&zoom=14","entities":[{"offset":31,"length":45,"type":"url"}],"link_preview_options":{"url":"https://www.openstreetmap.org/?mlat=10.208847&mlon=6.8889685&zoom=14"}}}'
+    exit 0
+fi
+
+read -d '' incoming_request_text <<- EOF
+GET /?lat=52.208847&lon=6.8889685&timestamp=1715329851658&hdop=5.8371916&altitude=33.068214&speed=0.0 HTTP/1.1
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 11; PHONE_MODEL Build/BUILD_INFO)
+Host: localhost:53692
+Connection: Keep-Alive
+Accept-Encoding: gzip
+EOF
+
+echo ${incoming_request_text} | /usr/bin/env bash -c "${2}"
